@@ -374,8 +374,8 @@ test_log_mel = (test_log_mel-mean_log_mel)/(std_log_mel+eps)
 ########################################################################################################################
 batch_size = 64
 batch_size_test = 64
-epochs = 1
-aeons = 1
+epochs = 100
+aeons = 4
 alpha = 1
 
 # predicting with GMMs
@@ -465,10 +465,10 @@ for n_subclusters in 2**np.arange(7):
     pred_unknown_final = pred_unknown[:, :, 0]
     pred_test_final = pred_test[:, :, 0]
     for lab in np.unique(train_labels):
-        if le.inverse_transform([lab])[0] == 'ToyConveyor':
-            pred_eval_final[:, lab] = pred_eval[:, :, 1]
-            pred_unknown_final[:, lab] = pred_unknown[:, :, 1]
-            pred_test_final[:, lab] = pred_test[:, :, 1]
+        if le.inverse_transform([lab])[0].split('_')[0] == 'ToyConveyor':
+            pred_eval_final[:, lab] = pred_eval[:, lab, 1]
+            pred_unknown_final[:, lab] = pred_unknown[:, lab, 1]
+            pred_test_final[:, lab] = pred_test[:, lab, 1]
 
     # output performance
     print('performance on evaluation set')
