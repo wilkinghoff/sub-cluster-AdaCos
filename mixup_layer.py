@@ -29,8 +29,7 @@ class MixupLayer(layers.Layer):
         # mixup labels
         y1 = inputs[1]
         y2 = tf.reverse(inputs[1], axis=[0])
-        # y = y1 * y_l + y2 * (1 - y_l)
-        y = tf.math.maximum(y1 * y_l, y2 * (1 - y_l))
+        y = y1 * y_l + y2 * (1 - y_l)
 
         # apply mixup or not
         dec = tf.dtypes.cast(tf.random.uniform(shape=[tf.shape(inputs[0])[0]]) < self.prob, tf.dtypes.float32)
