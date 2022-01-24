@@ -370,7 +370,7 @@ unknown_log_mel = (unknown_log_mel-mean_log_mel)/(std_log_mel+eps)
 test_log_mel = (test_log_mel-mean_log_mel)/(std_log_mel+eps)
 
 ########################################################################################################################
-# train x-vector cnn on train partition of development set
+# train cnn
 ########################################################################################################################
 batch_size = 64
 batch_size_test = 64
@@ -408,7 +408,7 @@ for n_subclusters in 2**np.arange(7):
         if not os.path.isfile(weight_path):
             class_weights = class_weight.compute_class_weight('balanced', np.unique(train_labels), train_labels)
             class_weights = {i: class_weights[i] for i in range(class_weights.shape[0])}
-            model.fit([train_log_mel, y_train_cat, type_labels_train, type_labels_train_s], y_train_cat, verbose=1,
+            model.fit([train_log_mel, y_train_cat], y_train_cat, verbose=1,
                                 batch_size= batch_size, epochs=epochs, callbacks=callbacks,
                                 validation_data=([eval_log_mel, y_eval_cat], y_eval_cat), class_weight=class_weights)
             model.save(weight_path)
