@@ -19,16 +19,6 @@ def mixupLoss(y_true, y_pred):
     return tf.keras.losses.categorical_crossentropy(y_true=y_pred[:, :, 1], y_pred=y_pred[:, :, 0])
 
 
-def make_mean(mat, label):
-    label, index = np.unique(label, return_inverse=True)
-    mean = []
-    mat = np.array(mat)
-    for i, spk in enumerate(label):
-        mean.append(np.mean(mat[np.nonzero(index == i)], axis=0))
-    mean = length_norm(mean)
-    return mean, label
-
-
 def length_norm(mat):
     norm_mat = []
     for line in mat:
